@@ -27,7 +27,6 @@ uint8_t AkiEthernet::begin(bool Wipe)
         }
     }
 }
-
 void AkiEthernet::loop()
 {
     if (AkiEthernetCfg.used == true)
@@ -42,14 +41,12 @@ void AkiEthernet::loop()
         }
     }
 }
-
 void AkiEthernet::UpdateIP(){
     AkiEthernetCfg.DeviceIP=Ethernet.localIP();
     AkiEthernetCfg.DNSIP=Ethernet.dnsServerIP();
     AkiEthernetCfg.GatewayIP=Ethernet.gatewayIP();
     AkiEthernetCfg.SubnetIP=Ethernet.subnetMask();
 }
-
 AkiEthernet::NetStatus AkiEthernet::status()
 {
     UpdateIP();
@@ -64,7 +61,6 @@ AkiEthernet::NetStatus AkiEthernet::status()
         return(AkiEthernet::OK);
     }
 }
-
 void AkiEthernet::PrintCFG(){
     UpdateIP();
     Serial.print("Status:");
@@ -94,7 +90,6 @@ void AkiEthernet::PrintCFG(){
     Serial.print("------Subnet IP:");
     Serial.println(AkiEthernetCfg.SubnetIP);
 }
-
 void AkiEthernet::WipeCFG(){
     Serial.println("Ethernet configuration start");
     char str[19];
@@ -142,14 +137,7 @@ void AkiEthernet::WipeCFG(){
             break;
         }
         strcpy(str,"");
-        for (uint8_t i = 0; i < slen;)
-        {
-            if (Serial.available() > 0)
-            {
-                str[i] = Serial.read();
-                i++;
-            }
-        }
+        ParceSerial(str,19);
         if (att == 0)
         {
             if(str[0] == '0')
